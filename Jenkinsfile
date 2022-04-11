@@ -4,7 +4,7 @@ node{
     }
 
     stage('Build Project'){
-        sh 'sudo mvn clean install'
+        sh 'mvn clean package'
     }
 
     stage('Build Docker Image'){
@@ -19,7 +19,7 @@ node{
     }
 
     stage('Run Container'){
-        sh 'docker rm --force configserver'
-        sh 'docker run --name configserver -e "SPRING_PROFILES_ACTIVE=localdiscovery" -p 8888:8888 moldoandrei/beer-config-server'
+        sh 'sudo docker rm --force configserver'
+        sh 'sudo docker run -d --name configserver -e "SPRING_PROFILES_ACTIVE=localdiscovery" -p 8888:8888 moldoandrei/beer-config-server'
     }
 }
